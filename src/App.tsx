@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
-import { TabPanel, AddKaijuDNA, KaijuAnalytics } from "./components";
+import { TabPanel, AddKaijuDNA, KaijuAnalytics } from "./containers";
 import { setCurrentTab } from "./redux/App";
 import { ApplicationState } from "./redux/rootReducer";
 

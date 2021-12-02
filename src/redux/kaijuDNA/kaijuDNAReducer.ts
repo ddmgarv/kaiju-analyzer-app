@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { SET_CURRENT_KAIJU_DNA } from "./kaijuDNATypes";
+import { SET_KAIJU_DNA } from "./kaijuDNATypes";
 import { ActionType } from "typesafe-actions";
 import * as kaijuActions from "./kaijuDNAActions";
 
@@ -15,7 +15,7 @@ export type KaijuState = {
 
 export const kaijuDNAReducer: Reducer<KaijuState, KaijuAction> = (state = initialState, { type, payload }) => {
 	switch (type) {
-		case SET_CURRENT_KAIJU_DNA:
+		case SET_KAIJU_DNA:
 			return { ...state, dna: payload };
 		default:
 			return state;

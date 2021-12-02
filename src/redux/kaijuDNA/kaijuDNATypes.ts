@@ -1,1 +1,1 @@
-export const SET_CURRENT_KAIJU_DNA = "SET_CURRENT_KAIJU_DNA";
+export const SET_KAIJU_DNA = "SET_KAIJU_DNA";
