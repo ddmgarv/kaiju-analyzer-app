@@ -1,38 +1,39 @@
-import { ChangeEvent, FormEvent, useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HttpService from "../Api/HttpService";
 import { ApplicationState } from "../redux";
-import { setKaijuDNA } from "../redux/kaijuDNA";
+import { setKaijuDNAValue, setKaijuDNAError } from "../redux/kaijuDNA";
+import { validateKaijuDNA } from "../utils";
 
 export const useAddKaijuForm = () => {
-	const dispatch = useDispatch();
-	const { dna } = useSelector((state: ApplicationState) => state.kaijuDNA);
+  const dispatch = useDispatch();
+  const { dna, hasError } = useSelector(
+    (state: ApplicationState) => state.kaijuDNA
+  );
 
-	useEffect(() => {
-		(() => {
-			const regex = /^[A-Za-z0-9]*$/;
-			if (!dna) return;
-			// if(regex.test(dna))
-			// dispatch()
-		})();
-	}, [dna]);
+  useEffect(() => {
+    const isValid = validateKaijuDNA(dna);
+    dispatch(setKaijuDNAError(!isValid));
+  }, [dna, dispatch]);
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		dispatch(setKaijuDNA(e.target.value));
-	};
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setKaijuDNAValue(e.target.value));
+  };
 
-	const handleSubmit = (e: FormEvent) => {
-		console.log(e);
-		// HttpService.post({
-		//   mode: "raw",
-		//   raw: {
-		//     dna: e.
-		//   }
-		// })
-	};
+  const handleSubmit = async () => {
+    const res = await HttpService.post({
+      mode: "raw",
+      raw: {
+        dna
+      }
+    });
+    console.log(res);
+  };
 
-	return {
-		handleSubmit,
-		handleChange,
-	};
+  return {
+    handleSubmit,
+    handleChange,
+    dna,
+    hasError
+  };
 };

@@ -1,15 +1,27 @@
-import { useSelector } from "react-redux";
-import { FormControl, Grid } from "@mui/material";
+import { Button, FormControl, Grid } from "@mui/material";
 import { useAddKaijuForm } from "../../hooks";
-import { ApplicationState } from "../../redux";
 import { AddKaijuInput } from "./components/AddKaijuInput";
 
 export const AddKaijuDNA = () => {
-	const { dna, hasError } = useSelector((state: ApplicationState) => state.kaijuDNA);
-	const { handleSubmit, handleChange } = useAddKaijuForm();
-	return (
-		<FormControl onSubmit={handleSubmit} fullWidth variant="outlined">
-			<AddKaijuInput dna={dna} hasError={hasError} handleChange={handleChange} />
-		</FormControl>
-	);
+  const { handleSubmit, handleChange, dna, hasError } = useAddKaijuForm();
+  return (
+    <Grid container>
+      <FormControl fullWidth variant="outlined">
+        <AddKaijuInput
+          dna={dna}
+          hasError={hasError}
+          handleChange={handleChange}
+        />
+      </FormControl>
+      <Button
+        type="submit"
+        sx={{ margin: "15px auto", maxWidth: "150px" }}
+        variant="contained"
+        onClick={handleSubmit}
+        disabled={hasError}
+      >
+        Submit DNA
+      </Button>
+    </Grid>
+  );
 };

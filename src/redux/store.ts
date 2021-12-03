@@ -3,13 +3,17 @@ import ReduxThunk from "redux-thunk";
 import { rootReducer } from "./rootReducer";
 
 declare global {
-	interface Window {
-		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-	}
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
 }
 
 const middlewares = [ReduxThunk];
 
-const composeEnhancers = (window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] as typeof compose) || compose;
+const composeEnhancers =
+  window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
 
-export const store = createStore(rootReducer(), composeEnhancers(applyMiddleware(...middlewares)));
+export const store = createStore(
+  rootReducer(),
+  composeEnhancers(applyMiddleware(...middlewares))
+);

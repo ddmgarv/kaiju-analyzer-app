@@ -9,29 +9,29 @@ type Mode = "raw";
 type Raw = { dna: string };
 
 export interface PostKaijuDNAApi {
-	mode: Mode;
-	raw: Raw;
+  mode: Mode;
+  raw: Raw;
 }
 
 class HttpService {
-	service: AxiosInstance;
+  service: AxiosInstance;
 
-	static instance = new HttpService();
+  static instance = new HttpService();
 
-	constructor() {
-		this.service = axios.create({
-			baseURL: process.env.REACT_APP_KAIJU_API_URL,
-			timeout: 4000,
-		});
-	}
+  constructor() {
+    this.service = axios.create({
+      baseURL: process.env.REACT_APP_KAIJU_API_URL,
+      timeout: 10000
+    });
+  }
 
-	get(kaijuType: GetKaijuTypeApi) {
-		this.service.get(`/stats?type=${kaijuType}`);
-	}
+  async get(kaijuType: GetKaijuTypeApi) {
+    return await this.service.get(`/stats?type=${kaijuType}`);
+  }
 
-	post(payload: PostKaijuDNAApi) {
-		this.service.post("/dna", payload);
-	}
+  async post(payload: PostKaijuDNAApi) {
+    return await this.service.post("/dna", payload);
+  }
 }
 
 export default HttpService.instance;
